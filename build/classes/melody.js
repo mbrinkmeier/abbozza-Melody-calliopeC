@@ -234,7 +234,7 @@ MelodyPlugin.parseMelody = function (melody) {
                 var melodyBlock = Blockly.mainWorkspace.newBlock("melody");
                 melodyBlock.initSvg();
                 melodyBlock.render();
-                // melodyBlock.getInput("NOTES").connection.connect(block.previousConnection);
+                melodyBlock.getInput("NOTES").connection.connect(block.previousConnection);
             }
             // block.render();
             lastBlock = block;

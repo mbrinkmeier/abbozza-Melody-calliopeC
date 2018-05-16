@@ -22,31 +22,55 @@
 #ifndef _ABZ_MELODY_H
 #define _ABZ_MELODY_H
 
+#include "MicroBit.h"
 
-#define Pitch.C     0x0000
-#define Pitch.CS    0x0001
-#define Pitch.D     0x0002
-#define Pitch.DS    0x0003
-#define Pitch.E     0x0004
-#define Pitch.ES    0x0005
-#define Pitch.F     0x0006
-#define Pitch.G     0x0007
-#define Pitch.GS    0x0008
-#define Pitch.A     0x0009
-#define Pitch.AS    0x000A
-#define Pitch.B     0x000B
-#define Pitch.Pause 0x000F
+#define PitchC     0x0000
+#define PitchCS    0x0001
+#define PitchD     0x0002
+#define PitchDS    0x0003
+#define PitchE     0x0004
+#define PitchES    0x0005
+#define PitchF     0x0006
+#define PitchG     0x0007
+#define PitchGS    0x0008
+#define PitchA     0x0009
+#define PitchAS    0x000A
+#define PitchB     0x000B
+#define PitchPause 0x000F
 
-#define Octave.Contra   0x0010
-#define Octave.Great    0x0020
-#define Octave.Small    0x0030
-#define Octave.One      0x0040
-#define Octave.Two      0x0050
-#define Octave.Three    0x0060
-#define Octave.Four     0x0070
+#define OctaveContra   0x0010
+#define OctaveGreat    0x0020
+#define OctaveSmall    0x0030
+#define OctaveOne      0x0040
+#define OctaveTwo      0x0050
+#define OctaveThree    0x0060
+#define OctaveFour     0x0070
 
 #define Staccato 0x4000
 #define Triole   0x8000
 
+class AbbozzaMelody {
+
+private:
+    const uint8_t *_data;
+    int cur_note;
+    int cur_pitch;
+    int cur_octave;
+    int cur_duration;
+    int cur_staccato;
+    int cur_triole;
+    
+public:
+    AbbozzaMelody(const uint8_t *data);
+    
+    void setNote(int no);
+    
+    uint8_t getPitch();
+    uint8_t getOctave();
+    uint8_t getDuration();
+    bool getStaccato();
+    bool getTriole();
+    
+};
 
 #endif

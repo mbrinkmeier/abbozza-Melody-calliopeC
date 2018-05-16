@@ -21,7 +21,36 @@
  * @fileoverview Blocks for teachers
  * 
  * @author michael.brinkmeier@uni-osnabrueck.de (Michael Brinkmeier)
+ * 
+ * The binary data for a melody consists of an array with two subsequent bytes
+ * encoding a note:
+ * 1st byte: 
+ *            bit 0 - 3 : pitch
+ *            bit 4 - 6 : octave
+ * 2nd byte:
+ *            bit 0 - 5 : duration
+ *            bit 6     : staccato
+ *            bit 7     : triole
  */
+
+Note = {};
+
+Note.Pause = 15;
+Note.C = 0;
+Note.CS = 1;
+Note.D = 2;
+Note.DS = 3;
+Note.E = 4;
+Note.F = 5;
+Note.FS = 6;
+Note.G = 7;
+Note.GS = 8;
+Note.A = 9;
+Note.AS = 10;
+Note.B = 11;
+
+Note.Staccato = 64;
+Note.Triole = 128;
 
 /**
  * A block providing an editable text instructions or hints
@@ -39,15 +68,22 @@ Abbozza.Melody = {
       .setCheck("MELODY_NOTE");
     this.setOutput(false);
     this.setTooltip('');
-    // this.setCommentText("");
-    this.setPreviousStatement(false);
-    this.setNextStatement(false);
+    this.setPreviousStatement(true, "DEVICE");
+    this.setNextStatement(true, "DEVICE");
   },
   
   generateCode : function(generator) {
-  	return "";
+      var name = generator.fieldToCode(this,"NAME");
+      var data = generator.statementToCode(this, 'NOTES', "");
+      data = data.replace(/\n/g,",");
+      
+      generator.addInitCode("const uint8_t __melody_" + name + "_data__[] __attribute__ ((aligned (4))) = { 0xff,0xff," + data + " };");
+      return "";
   }
 };
+
+
+
 
 Abbozza.MelodyDuration = null;
 
@@ -85,18 +121,36 @@ Abbozza.MelodyNote = {
                 .appendField(new Blockly.FieldCheckbox(false),"TRIOLE")
                 .appendField("Staccato")
                 .appendField(new Blockly.FieldCheckbox(false),"STACCATO");
+        this.setOutput(false);
         this.setInputsInline(false);
         this.setPreviousStatement(true, "MELODY_NOTE");
         this.setNextStatement(true, "MELODY_NOTE");
         this.setTooltip('');
     },
+    
     generateCode: function (generator) {
-        return "";
+        var pitch = generator.fieldToCode(this,"NOTE");
+        var octave = generator.fieldToCode(this,"OCTAVE");
+        var duration = generator.fieldToCode(this,"DURATION");
+        var triole = generator.fieldToCode(this,"TRIOLE");
+        var staccato = generator.fieldToCode(this,"STACCATO");
+                
+        var first = parseInt(pitch) + 16 * parseInt(octave);
+        var second = parseInt(duration);
+        if (triole) {
+           second = second + Note.Triole;
+        }
+        if (staccato) {
+           second = second + Note.Staccato;
+        }
+        
+        return first + "," + second;
     },
+    
     setValues: function(note,octave,dur,tri,art) {
-       this.getField("NOTE").setValue(note);
-       this.getField("OCTAVE").setValue(octave);
-       this.getField("DURATION").setValue(dur);
+       this.getField("NOTE").setValue("" + note);
+       this.getField("OCTAVE").setValue("" + octave);
+       this.getField("DURATION").setValue("" + dur);
        if ( tri == 1 ) {
            this.getField("TRIOLE").state_ = true;
        }
@@ -114,7 +168,7 @@ Abbozza.MelodyPause = {
                 [_("melody.FULL"),"32"],
                 [_("melody.HALF"),"16"],
                 [_("melody.QUARTER"),"8"],
-                [_("melody.EIGTH"),"4"],
+                [_("melody.EIGHTH"),"4"],
                 [_("melody.SIXTEENTH"),"2"],
                 [_("melody.THIRTYSECOND"),"1"]
             ];        
@@ -122,18 +176,23 @@ Abbozza.MelodyPause = {
         this.setHelpUrl(Abbozza.HELP_URL);
         this.setColour(ColorMgr.getColor("cat.SOUND"));
         this.appendDummyInput()
-                .appendField(new Blockly.FieldDropdown(Abbozza.MelodyDuration),"DURATION")
-                .appendField(_("melody.PAUSE"));
+                .appendField(_("melody.PAUSE"))
+                .appendField(new Blockly.FieldDropdown(Abbozza.MelodyDuration),"DURATION");
+        this.setOutput(false);
         this.setInputsInline(false);
         this.setPreviousStatement(true, "MELODY_NOTE");
         this.setNextStatement(true, "MELODY_NOTE");
         this.setTooltip('');
     },
     generateCode: function (generator) {
-        return "";
+        var first = Note.Pause;
+        var duration = generator.fieldToCode(this,"DURATION");
+        var second = duration;
+        
+        return first + "," + second;
     },
-    setValues: function(dur) {
-       this.getField("DURATION").setValue(dur);
+    setValues: function (dur) {
+       this.getField("DURATION").setValue("" + dur);
     }
 };
 

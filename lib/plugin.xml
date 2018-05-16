@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="abbozzaMelody" system="calliopeC" parent="devices">
+   <name>abbozza! Melody</name>
+   <description>
+       Dieses abbozza! Calliope Plugin stellt Melodien zur Verfügung
+   </description>
+   <js file="blocks.js"/>
+   <js file="melody.js"/>
+
+   <!-- Additions to the toolbox -->
+   <feature id="feat.melody" option="abbozzaMelody.enabled">
+      <category name ="Sound" id="cat.SOUND">
+        <!-- <block type="dev_mhz16_device"/> -->
+      </category>
+   </feature>
+
+   <!-- A subclass of PluginHandler, used by the plugin -->
+   <handler class="MelodyHandler"/>
+   
+   <locales>
+       <language id="en">
+            <msg id="gui.melodyplugin_tool">abbozza! Melody</msg>
+            <msg id="melody.PAUSE">Pause</msg>
+            <msg id="melody.MELODY">Melody</msg>
+            <msg id="melody.FULL">full note</msg>
+            <msg id="melody.HALF">half note</msg>
+            <msg id="melody.QUARTER">quarter note</msg>
+            <msg id="melody.EIGHTH">1/8 note</msg>
+            <msg id="melody.SIXTEENTH">1/16 note</msg>
+            <msg id="melody.THIRTYSECOND">1/32 note</msg>
+       </language>
+       <language id="de">           
+            <msg id="gui.melodyplugin_tool">abbozza! Melody</msg>
+            <msg id="melody.PAUSE">Pause</msg>
+            <msg id="melody.MELODY">Melodie</msg>
+            <msg id="melody.FULL">Ganze Note</msg>
+            <msg id="melody.HALF">Halbe Note</msg>
+            <msg id="melody.QUARTER">Viertel Note</msg>
+            <msg id="melody.EIGHTH">1/8 Note</msg>
+            <msg id="melody.SIXTEENTH">1/16 Note</msg>
+            <msg id="melody.THIRTYSECOND">1/32 Note</msg>
+       </language>
+   </locales>
+   <requirements>
+       <install file="abbozzaMelody.h" target="abbozzaMelody.h"/>
+       <install file="abbozzaMelody.cpp" target="abbozzaMelody.cpp"/>
+   </requirements>
+</plugin>

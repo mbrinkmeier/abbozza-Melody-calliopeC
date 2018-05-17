@@ -27,6 +27,12 @@ AbbozzaMelody::AbbozzaMelody(const uint8_t *data) {
     this->cur_note = 0;
 }
 
+/**
+ * Set the number of the current note in the melody.
+ * 
+ * @param no
+ */
+
 void AbbozzaMelody::setNote(int no) {
     this->cur_note = no % ( sizeof(_data)/2 - 1);
     while ( cur_note < 0 ) cur_note = cur_note + sizeof(_data)/2 - 1;
@@ -42,6 +48,35 @@ void AbbozzaMelody::setNote(int no) {
     cur_triole = second & 0x8000;
 }
 
+/**
+ * Return the frequency of the current note.
+ * 
+ * @return The frequency in Hz of the current note.
+ */
+int AbbozzaMelody::getFrequency() {
+    int pitch = getPitch();
+    int octave = getOctave();
+    
+    int freqIdx = octave * 12 + pitch;
+    
+    return AbbozzaFrequencies[freqIdx];
+    
+}
+
+/**
+ * Return the duration of the current note in ms.
+ * 
+ * @return The duration of the current note in ms.
+ */
+int AbbozzaMelody::getDuration() {
+    int dur = speed * cur_duration / 32;
+    if ( cur_triole ) {
+        dur = dur * 2 / 3;
+    }
+    return dur;
+}
+
+
 uint8_t AbbozzaMelody::getPitch() {
     return cur_pitch;
 }
@@ -49,11 +84,6 @@ uint8_t AbbozzaMelody::getPitch() {
 
 uint8_t AbbozzaMelody::getOctave() {
     return cur_octave;
-}
-
-
-uint8_t AbbozzaMelody::getDuration() {
-    return cur_duration;
 }
 
 

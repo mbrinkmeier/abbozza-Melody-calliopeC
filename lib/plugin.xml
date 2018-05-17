@@ -10,7 +10,15 @@
    <!-- Additions to the toolbox -->
    <feature id="feat.melody" option="abbozzaMelody.enabled">
       <category name ="Sound" id="cat.SOUND">
-        <!-- <block type="dev_mhz16_device"/> -->
+        <block type="melody"/>
+        <block type="melody_note">
+        </block>
+        <block type="melody_pause">
+        </block>
+        <block type="melody_set_note">
+        </block>
+        <block type="melody_get_freq"/>
+        <block type="melody_get_dur"/>
       </category>
    </feature>
 
@@ -28,6 +36,9 @@
             <msg id="melody.EIGHTH">1/8 note</msg>
             <msg id="melody.SIXTEENTH">1/16 note</msg>
             <msg id="melody.THIRTYSECOND">1/32 note</msg>
+            <msg id="melody.SET_NOTE">: Select note</msg>
+            <msg id="melody.GET_FREQ">: Frequency</msg>
+            <msg id="melody.GET_DUR">: Duration</msg>
        </language>
        <language id="de">           
             <msg id="gui.melodyplugin_tool">abbozza! Melody</msg>
@@ -39,6 +50,9 @@
             <msg id="melody.EIGHTH">1/8 Note</msg>
             <msg id="melody.SIXTEENTH">1/16 Note</msg>
             <msg id="melody.THIRTYSECOND">1/32 Note</msg>
+            <msg id="melody.SET_NOTE">: Wähle Note</msg>
+            <msg id="melody.GET_FREQ">: Frequenz</msg>
+            <msg id="melody.GET_DUR">: Tonlänge</msg>
        </language>
    </locales>
    <requirements>

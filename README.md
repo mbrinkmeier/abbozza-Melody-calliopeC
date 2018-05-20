@@ -30,20 +30,23 @@ The voice has to be given in C major.
 
 The voice consists of a sequence of entries, each describing either a note or a pause.
 
-The entry of a note is of the following form: `<pitch><octave><duration>[-.]`
+The entry of a note is of the following form: `<pitch><duration>[-.]`
 
-`<pitch>`is the pitch of the note, i.e one of `c`,`d`,`e`,`f`,`g`,`a`,`b`. it might be increased by
-a halfe note by appending `is` and decreased by a half note by `es`. For example `cis` is a ♯C while `ges`
-is a ♭G.
+The pitch of a note is secified by a the lowercase letters a through g. The note names c to b indicate the 
+octave below middle C. Accidentals are given by appended `ìs` and `es`, increasing or decreasing the pitch by a half tone.
+For example `cis` is a ♯C while `ges` is a ♭G.
 
-`<octave>` is the octave of the note. If `<octave>` is empty the pitch in the small octave is used.
-Adding a series of `'` or `,` increases or decreases the chosen octave. For example the concert pitch A
-is given by `a'`, ie. the A pitch from thh one-accented octave. The Middle C is described by `c'` while
-the Bass C is `c` without an accent and the Low C is `c,`
+An entry of pitch `r` is a pause.
 
-`<duration>` is the duration of the note described by the fraction. `c1` is the Bass C of full (1/1) length,
-while `d4` is a quarter (1/4) note of pitch `d`. abbozza! Melody knows the lengths 1, 2, 4, 8, 16 and 32.
+To lower or raise the octave either an number of `'` or `,` is appended, each increasing or decreasing the octave.
+For example the concert pitch A is given by `a'`, ie. the A pitch from thh one-accented octave. The Middle C is
+described by `c'` while the Bass C is `c` without an accent and the Low C is `c,`
+
+Durations are designated by numbers. They are entered as their reciprocal values. For example, a quarter note is entered using a 4 (since it is a 1/4 note), and a half note is entered using a 2 (since it is a 1/2 note).
+`c1` is the Bass C of full (1/1) length, while `d4` is a quarter (1/4) note of pitch `d`. abbozza! Melody knows the
+lengths 1, 2, 4, 8, 16 and 32.
 
 To indicate that a note should be played as staccato `-.` is appended to the entry.
 
 A triole is described by grouping notes together using `\tuplet 3/2 { ... }`.
+

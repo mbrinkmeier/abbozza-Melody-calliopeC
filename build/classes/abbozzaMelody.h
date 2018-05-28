@@ -73,7 +73,7 @@ private:
     int cur_triole;
     
 public:
-    AbbozzaMelody(const uint8_t *data);getFrequ
+    AbbozzaMelody(const uint8_t *data);
     
     void setNote(int no);
     void setSpeed(int speed);
